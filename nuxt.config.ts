@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     // apiBase: "http://api.jxihub.cn",
     // // 公共环境变量（在客户端和服务器端都可用）
     public: {
-      apiBase: 'http://api.jxihub.cn',
+      apiBase: 'https://api.jxihub.cn',
     },
   },
   nitro: {
