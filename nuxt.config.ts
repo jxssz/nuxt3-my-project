@@ -30,4 +30,26 @@ export default defineNuxtConfig({
       noExternal: ["ant-design-vue"],
     },
   },
+  runtimeConfig: {
+    // // 私有环境变量（仅在服务器端可用）
+    // apiBase: "http://api.jxihub.cn",
+    // // 公共环境变量（在客户端和服务器端都可用）
+    public: {
+      apiBase: 'http://api.jxihub.cn',
+    },
+  },
+  nitro: {
+    devProxy: {
+      "/api": {
+        target: "http://127.0.0.1:8080/api",
+        prependPath: true,
+        changeOrigin: true,
+      },
+    },
+    // routeRules: {
+    //   "/api/": {
+    //     proxy: "http://api.jxihub.cn/",
+    //   },
+    // },
+  },
 });

@@ -13,7 +13,7 @@
 import Header from "./components/header.vue";
 import Footer from "./components/footer.vue";
 onMounted(() => {
-  $fetch("http://localhost:8080/api/log");
+  $fetch(useRuntimeConfig().public.apiBase + "/api/log");
 });
 </script>
 <style>

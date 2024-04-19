@@ -12,7 +12,7 @@
 import "quill/dist/quill.core.css";
 const route = useRoute();
 const { result } = await $fetch(
-  "http://localhost:8080/api/posts/" + route.params.id
+  useRuntimeConfig().public.apiBase  + "/api/posts/" + route.params.id
 );
 console.log(route, result);
 </script>

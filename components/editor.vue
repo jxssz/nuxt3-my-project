@@ -129,7 +129,7 @@ const save = () => {
     content: quill.root.innerHTML,
     author_id: "1",
   };
-  fetch("http://localhost:8080/api/save", {
+  fetch(useRuntimeConfig().public.apiBase  + "/api/save", {
     method: "post",
     headers: {
       "Content-Type": "application/json", // 设置请求头，表示请求体是 JSON 格式

@@ -33,7 +33,7 @@
 import moment from "@static/js/moment";
 // console.log(moment)
 const { data, pending, error, refresh } = await useAsyncData(() =>
-  $fetch("http://localhost:8080/api/posts")
+  $fetch(useRuntimeConfig().public.apiBase  + "/api/posts")
 );
 const list = ref(data.value.result || []);
 list.value.forEach((item) => {
