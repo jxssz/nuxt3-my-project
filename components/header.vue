@@ -33,6 +33,10 @@ const list = [
     title: "关于",
     url: "/about",
   },
+  {
+    title: 'test',
+    url: '/test'
+  }
 ];
 onMounted(() => {
   const navbar = document.getElementById("nav");
