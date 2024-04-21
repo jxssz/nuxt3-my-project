@@ -10,15 +10,18 @@
             </h3>
           </NuxtLink>
           <div class="flex items-center text-xs space-x-3">
-            <span class="flex items-center text text-neutral-400"
-              ><EyeOutlined class="mr-1" />{{ item.view }}</span
-            >
-            <time class="flex items-center text text-neutral-400"
-              ><FieldTimeOutlined class="mr-1" />{{ item._updated_at }}</time
-            >
+            <span class="flex items-center text text-neutral-400">
+              <EyeOutlined class="mr-1" />{{ item.view }}
+            </span>
+            <time
+              class="flex items-center text text-neutral-400"
+              >
+              <FieldTimeOutlined class="mr-1" />
+              {{ item._updated_at }}
+            </time>
           </div>
 
-          <section class="line-clamp-3">{{ item.content }}</section>
+          <section class="line-clamp-3" v-html="item.content"/>
         </article>
 
         <!-- 一条横向分割线 -->
