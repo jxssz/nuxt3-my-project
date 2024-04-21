@@ -19817,7 +19817,7 @@ const _sfc_main$2 = {
       title: "金潇的天空之城",
       meta: [
         { name: "description", content: "一个普通的前端工程师,憧憬美好的生活！" },
-        { name: "keyword", content: "java node javascript mysql tailtindcss 全栈 技术 博客 日志" }
+        { name: "keywords", content: "java node javascript mysql tailtindcss 全栈 技术 博客 日志" }
       ]
     });
     return (_ctx, _push, _parent, _attrs) => {
