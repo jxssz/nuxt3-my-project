@@ -1,6 +1,15 @@
 <script setup lang="ts">
+interface Error {
+  // HTTP响应状态码
+  statusCode: number
+  // HTTP响应状态消息
+  statusMessage: string
+  // 错误消息
+  message: string
+}
+
 const props = defineProps<{
-  error: object
+  error: Error
 }>()
 
 const handleBackHome = () => clearError({ redirect: '/' })
