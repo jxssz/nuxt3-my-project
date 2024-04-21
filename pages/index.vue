@@ -16,7 +16,7 @@
 </template>
 <script setup>
 const config = useRuntimeConfig()
-console.log(config.public)
+console.log(config)
 // const { data, pending, error, refresh } = await useAsyncData(() =>
 //   $fetch("http://localhost:8080/api/posts")
 // );

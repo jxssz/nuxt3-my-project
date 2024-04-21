@@ -15,6 +15,12 @@ const { result } = await $fetch(
   useRuntimeConfig().public.apiBase  + "/api/posts/" + route.params.id
 );
 console.log(route, result);
+useHead({
+  title: '金潇的天空之城-' + result.title,
+  meta: [
+    { name: 'description', content: result.title + '-详情' }
+  ]
+})
 </script>
 <style scoped>
 </style>
