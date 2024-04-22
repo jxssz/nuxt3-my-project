@@ -17,12 +17,16 @@ export default defineNuxtConfig({
     "@static": "/static",
   },
   plugins: [],
-  css: ["~/static/css/default.css"],
+  css: [
+    "~/static/css/default.css",
+    "quill/dist/quill.core.css",
+    "quill-emoji/dist/quill-emoji.css",
+  ],
   vite: {
     plugins: [
       Components({
         resolvers: [
-          AntDesignVueResolver({ importStyle: false, resolveIcons: true }),
+          AntDesignVueResolver({ importStyle: false, resolveIcons: false }),
         ],
       }),
     ],
@@ -35,7 +39,7 @@ export default defineNuxtConfig({
     // apiBase: "http://api.jxihub.cn",
     // // 公共环境变量（在客户端和服务器端都可用）
     public: {
-      apiBase: 'https://api.jxihub.cn',
+      apiBase: "https://api.jxihub.cn",
       baseUrl: process.env.BASE_URL,
     },
   },

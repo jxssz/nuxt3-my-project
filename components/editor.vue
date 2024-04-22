@@ -41,33 +41,37 @@
 import { onBeforeUnmount, ref, shallowRef, onMounted, nextTick } from "vue";
 // import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 // import "quill/dist/quill.bubble.css";
-import "quill/dist/quill.snow.css"
+import "quill/dist/quill.snow.css";
 import hljs from "highlight.js";
 import "highlight.js/styles/monokai-sublime.css";
 import Quill from "quill";
+
 window.hljs = hljs;
 
 let quill = null;
-const toolbarOptions = [
-  ["bold", "italic", "underline", "strike"], // toggled buttons
-  ["code-block"],
-  ["link", "image", "video", "formula"],
+const toolbarOptions = {
+  container: [
+    ["bold", "italic", "underline", "strike"], // toggled buttons
+    ["code-block"],
+    ["link", "image", "video", "formula"],
 
-  [{ header: 1 }, { header: 2 }], // custom button values
-  [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-  [{ script: "sub" }, { script: "super" }], // superscript/subscript
-  [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-  [{ direction: "rtl" }], // text direction
+    [{ header: 1, class: "12312" }, { header: 2 }], // custom button values
+    [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+    [{ script: "sub" }, { script: "super" }], // superscript/subscript
+    [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+    [{ direction: "rtl" }], // text direction
 
-  [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-  [{ font: [] }],
-  [{ align: [] }],
-
-  ["clean"], // remove formatting button
-];
+    [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+    [{ font: [] }],
+    [{ align: [] }],
+    ["clean"], // remove formatting button
+  ],
+  handlers: {
+  },
+};
 // const mode = "default"; // 或 'simple'
 
 // 编辑器实例，必须用 shallowRef
@@ -84,42 +88,18 @@ const data = ref({
 // });
 // 模拟 ajax 异步获取内容
 onMounted(() => {
-  // nextTick(() => {
   quill = new Quill("#editor", {
     theme: "snow",
     modules: {
-      syntax: {hljs},
+      syntax: { hljs },
       toolbar: toolbarOptions,
+      table: false
+      // "emoji-toolbar": true,
+      // "emoji-textarea": false,
+      // "emoji-shortname": true,
     },
-    // });
   });
-  // 使用 Highlight.js 进行代码块高亮
-  // quill.on('text-change', () => {
-  //   // 遍历所有的 `pre code` 元素并进行高亮
-  //   const codes = document.querySelectorAll('pre code');
-  //   codes.forEach((block) => {
-  //     hljs.highlightElement(block);
-  //   });
-  // });
-
-  // setTimeout(() => {
-  //   // data.value.title = "<p>模拟 Ajax 异步设置内容</p>";
-  // }, 1500);
 });
-
-// const toolbarConfig = {};
-// const editorConfig = { placeholder: "请输入内容..." };
-
-// // 组件销毁时，也及时销毁编辑器
-// onBeforeUnmount(() => {
-//   const editor = editorRef.value;
-//   if (editor == null) return;
-//   editor.destroy();
-// });
-
-// const handleCreated = (editor) => {
-//   editorRef.value = editor; // 记录 editor 实例，重要！
-// };
 
 const save = () => {
   console.log(quill.root.innerHTML);
@@ -129,7 +109,7 @@ const save = () => {
     content: quill.root.innerHTML,
     author_id: "1",
   };
-  fetch(useRuntimeConfig().public.apiBase  + "/api/save", {
+  fetch(useRuntimeConfig().public.apiBase + "/api/save", {
     method: "post",
     headers: {
       "Content-Type": "application/json", // 设置请求头，表示请求体是 JSON 格式

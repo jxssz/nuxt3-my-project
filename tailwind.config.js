@@ -1,6 +1,11 @@
 /** @type {import('tailwindcss').Config} */
+
+import {addDynamicIconSelectors} from '@iconify/tailwind';
 import colors from "tailwindcss/colors";
+
 module.exports = {
+  important: true,
+  plugins: [addDynamicIconSelectors()],
   theme: {
     screens: {
       sm: "480px",
@@ -39,7 +44,6 @@ module.exports = {
       fontSize: {
         base: ["12px", "14px"],
       },
-    },
-    plugins: {},
+    }
   },
 };

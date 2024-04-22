@@ -1,5 +1,5 @@
 <template>
-  <section class=" max-w-3xl m-auto">
+  <section class="max-w-3xl m-auto px-3">
     首页
     <!-- <a-button type="primary">Primary Button</a-button> -->
     <!-- <ul>

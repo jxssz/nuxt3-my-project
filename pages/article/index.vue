@@ -1,6 +1,6 @@
 <template>
   <section>
-    <ul class="max-w-3xl m-auto overflow-hidden sm:px-2">
+    <ul class="max-w-3xl m-auto overflow-hidden px-3">
       <li class="leading-10" v-for="(item, index) in list" :key="index">
         <article>
           <NuxtLink :to="`/article/detail/${item.id}`">
@@ -11,17 +11,15 @@
           </NuxtLink>
           <div class="flex items-center text-xs space-x-3">
             <span class="flex items-center text text-neutral-400">
-              <EyeOutlined class="mr-1" />{{ item.view }}
+              <span class="icon-[line-md--watch] mr-1"></span>
+              {{ item.view }}
             </span>
-            <time
-              class="flex items-center text text-neutral-400"
-              >
-              <FieldTimeOutlined class="mr-1" />
-              {{ item._updated_at }}
+            <time class="flex items-center text text-neutral-400">
+              <span class="icon-[line-md--gauge]  mr-1"></span>{{ item._updated_at }}
             </time>
           </div>
 
-          <section class="line-clamp-3" v-html="item.content"/>
+          <section class="line-clamp-3" v-html="item.content" />
         </article>
 
         <!-- 一条横向分割线 -->
@@ -36,7 +34,7 @@
 import moment from "@static/js/moment";
 // console.log(moment)
 const { data, pending, error, refresh } = await useAsyncData(() =>
-  $fetch(useRuntimeConfig().public.apiBase  + "/api/posts")
+  $fetch(useRuntimeConfig().public.apiBase + "/api/posts")
 );
 const list = ref(data.value.result || []);
 list.value.forEach((item) => {

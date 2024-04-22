@@ -1,10 +1,11 @@
 <template>
-  <section class="bg-gray-light bg-opacity-5 min-h-screen">
-    <section class="container mx-auto">
-      <Header class="mx-auto max-w-xl" />
-      <section class="">
+  <section class="bg-gray-light bg-opacity-5">
+    <section class="flex flex-col min-h-screen mx-auto items-center">
+      <Header class="max-w-3xl"/>
+      <section class="container flex-grow">
         <NuxtPage />
       </section>
+      <Footer class="bg-blue-200"/>
     </section>
   </section>
   <a-back-top :visibility-height="500" />

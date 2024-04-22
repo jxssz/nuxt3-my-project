@@ -1,11 +1,11 @@
 <template>
-  <nav class="h-12">
+  <nav class="h-12 w-full">
     <div
       id="nav"
       class="w-full"
       style="z-index: 999">
       <ul
-        class="mx-auto max-w-xl flex justify-end space-x-5 px-5 h-12 items-center">
+        class="mx-auto max-w-3xl flex justify-end space-x-5 px-5 h-12 items-center">
         <li class="flex space-x-28" v-for="item in list" :key="item">
           <NuxtLink :to="item.url" class="active:text-blue">{{
             item.title
