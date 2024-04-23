@@ -20,7 +20,6 @@ export default defineNuxtConfig({
   css: [
     "~/static/css/default.css",
     "quill/dist/quill.core.css",
-    "quill-emoji/dist/quill-emoji.css",
   ],
   vite: {
     plugins: [
