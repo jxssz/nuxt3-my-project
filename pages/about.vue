@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-3xl m-auto px-3">
+    <div class="max-w-3xl m-auto p-5">
         about
         
     </div>

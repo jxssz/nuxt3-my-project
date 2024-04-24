@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import Components from "unplugin-vue-components/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   modules: ["@nuxtjs/tailwindcss", "@nuxt/content"],
@@ -16,11 +17,8 @@ export default defineNuxtConfig({
   alias: {
     "@static": "/static",
   },
-  plugins: [],
-  css: [
-    "~/static/css/default.css",
-    "quill/dist/quill.core.css",
-  ],
+  plugins: ["@/plugins/prism.js"],
+  css: ["@static/css/default.css", "@static/editor/editor.css"],
   vite: {
     plugins: [
       Components({
@@ -38,18 +36,18 @@ export default defineNuxtConfig({
     // apiBase: "http://api.jxihub.cn",
     // // 公共环境变量（在客户端和服务器端都可用）
     public: {
-      apiBase: "https://api.jxihub.cn",
-      baseUrl: process.env.BASE_URL,
+      apiBase: process.env.BASE_URL,
+      // baseUrl: process.env.BASE_URL,
     },
   },
   nitro: {
-    devProxy: {
-      "/api": {
-        target: "http://127.0.0.1:8080/api",
-        prependPath: true,
-        changeOrigin: true,
-      },
-    },
+    // devProxy: {
+    //   "/api": {
+    //     target: "http://127.0.0.1:8080/api",
+    //     prependPath: true,
+    //     changeOrigin: true,
+    //   },
+    // },
     // routeRules: {
     //   "/api/": {
     //     proxy: "http://api.jxihub.cn/",

@@ -13,9 +13,6 @@
 <script setup>
 import Header from "./components/header.vue";
 import Footer from "./components/footer.vue";
-onMounted(() => {
-  $fetch(useRuntimeConfig().public.apiBase + "/api/log");
-});
 
 useHead({
   title: "金潇的天空之城",

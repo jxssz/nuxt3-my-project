@@ -3,8 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build --dotenv .env.production",
-    "dev": "nuxt dev --dotenv ./.env.local",
+    "build": "nuxt build --dotenv .env.prod",
+    "dev": "nuxt dev --dotenv .env.local",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -12,10 +12,9 @@
   },
   "dependencies": {
     "ant-design-vue": "4.x",
-    "highlight.js": "^11.9.0",
     "moment": "^2.30.1",
     "nuxt": "^3.11.2",
-    "quill": "^2.0.0",
+    "prismjs": "^1.29.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

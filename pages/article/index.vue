@@ -1,6 +1,6 @@
 <template>
   <section>
-    <ul class="max-w-3xl m-auto overflow-hidden px-3">
+    <ul class="max-w-3xl m-auto overflow-hidden p-5">
       <li class="leading-10" v-for="(item, index) in list" :key="index">
         <article>
           <NuxtLink :to="`/article/detail/${item.id}`">
@@ -19,7 +19,7 @@
             </time>
           </div>
 
-          <section class="line-clamp-3" v-html="item.content" />
+          <section class="line-clamp-3">{{ item.description || '' }}</section>
         </article>
 
         <!-- 一条横向分割线 -->
