@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="article-main">
     <div class="max-w-3xl m-auto p-5">
       <div id="editor-content-view" class="editor-content-view">
         <h2 class="text-3xl">{{ result.title }}</h2>
@@ -15,7 +15,7 @@
           </time>
         </div>
         <hr class="border-t-1 border-gray-light my-4" />
-        <div class="" v-html="result.content"></div>
+        <div class="content" v-html="result.content"></div>
       </div>
     </div>
   </section>
@@ -37,7 +37,26 @@ useHead({
   meta: [{ name: "description", content: result.title + "-详情" }],
 });
 </script>
-<style>
+<style lang="scss">
+.article-main {
+  .content {
+    blockquote,
+    dl,
+    dd,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    hr,
+    figure,
+    p,
+    pre {
+      margin: revert;
+    }
+  }
+}
 .ql-snow {
 }
 </style>
