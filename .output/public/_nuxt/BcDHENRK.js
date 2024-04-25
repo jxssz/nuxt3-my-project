@@ -1,1 +1,0 @@
-import{c as e,aE as s,o as t}from"./D_Uy5VQi.js";const c={class:"max-w-3xl m-auto p-5"},i={__name:"index",setup(n){const o=s();return console.log(o),(a,_)=>(t(),e("section",c," 首页 "))}};export{i as default};
