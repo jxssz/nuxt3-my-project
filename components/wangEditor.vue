@@ -47,80 +47,80 @@ nextTick(() => {
     scroll: false,
     MENU_CONF: {
       insertImage: {
-        async parseImageSrc(src) {
-          // 创建一个Promise
-          const loadImagePromise = new Promise((resolve, reject) => {
-            // 创建一个新的Image对象
-            var img = new Image();
-            // 设置Image对象的src属性，加载Base64编码的图片
-            img.src = src;
-            // 当图片加载完成后执行以下操作
-            img.onload = function () {
-              // 获取图片的宽度和高度
-              var width = this.width;
-              var height = this.height;
-              // 输出图片的宽度和高度
-              var canvas = document.createElement("canvas");
-              var ctx = canvas.getContext("2d");
-              // 将图片绘制到Canvas上
-              canvas.width = width;
-              canvas.height = height;
-              ctx.drawImage(img, 0, 0);
-              // 压缩图片（这里可以调整压缩质量和尺寸）
-              var compressedImageData = canvas.toDataURL("image/jpeg", 0.5); // 压缩质量为0.5
-              // 将Data URI转换为Blob对象
-              function dataURItoBlob(dataURI) {
-                var byteString = atob(dataURI.split(",")[1]);
-                var mimeString = dataURI
-                  .split(",")[0]
-                  .split(":")[1]
-                  .split(";")[0];
-                var ab = new ArrayBuffer(byteString.length);
-                var ia = new Uint8Array(ab);
-                for (var i = 0; i < byteString.length; i++) {
-                  ia[i] = byteString.charCodeAt(i);
-                }
-                return new Blob([ab], { type: mimeString });
-              }
-              // 创建一个新的Blob对象，表示压缩后的图片数据
-              var compressedImageBlob = dataURItoBlob(compressedImageData);
-              var srcBlob = dataURItoBlob(src);
-              // 计算压缩前后图片的内存大小
-              var originalFileSize = srcBlob.size;
-              var compressedFileSize = compressedImageBlob.size;
-              canvas.toBlob(function (blob) {
-                // 创建一个URL对象，表示生成的WebP图像
-                var webpURL = URL.createObjectURL(blob);
-                // 解决Promise并返回生成的WebP图像的URL
-                resolve({ webpURL, compressedImageData });
-              }, "image/webp");
-            };
-          });
-          const { webpURL, compressedImageData } = await loadImagePromise;
-          const result = await fetch(webpURL);
-          // console.log(result.blob());
+        // async parseImageSrc(src) {
+        //   // 创建一个Promise
+        //   const loadImagePromise = new Promise((resolve, reject) => {
+        //     // 创建一个新的Image对象
+        //     var img = new Image();
+        //     // 设置Image对象的src属性，加载Base64编码的图片
+        //     img.src = src;
+        //     // 当图片加载完成后执行以下操作
+        //     img.onload = function () {
+        //       // 获取图片的宽度和高度
+        //       var width = this.width;
+        //       var height = this.height;
+        //       // 输出图片的宽度和高度
+        //       var canvas = document.createElement("canvas");
+        //       var ctx = canvas.getContext("2d");
+        //       // 将图片绘制到Canvas上
+        //       canvas.width = width;
+        //       canvas.height = height;
+        //       ctx.drawImage(img, 0, 0);
+        //       // 压缩图片（这里可以调整压缩质量和尺寸）
+        //       var compressedImageData = canvas.toDataURL("image/jpeg", 0.5); // 压缩质量为0.5
+        //       // 将Data URI转换为Blob对象
+        //       function dataURItoBlob(dataURI) {
+        //         var byteString = atob(dataURI.split(",")[1]);
+        //         var mimeString = dataURI
+        //           .split(",")[0]
+        //           .split(":")[1]
+        //           .split(";")[0];
+        //         var ab = new ArrayBuffer(byteString.length);
+        //         var ia = new Uint8Array(ab);
+        //         for (var i = 0; i < byteString.length; i++) {
+        //           ia[i] = byteString.charCodeAt(i);
+        //         }
+        //         return new Blob([ab], { type: mimeString });
+        //       }
+        //       // 创建一个新的Blob对象，表示压缩后的图片数据
+        //       var compressedImageBlob = dataURItoBlob(compressedImageData);
+        //       var srcBlob = dataURItoBlob(src);
+        //       // 计算压缩前后图片的内存大小
+        //       var originalFileSize = srcBlob.size;
+        //       var compressedFileSize = compressedImageBlob.size;
+        //       canvas.toBlob(function (blob) {
+        //         // 创建一个URL对象，表示生成的WebP图像
+        //         var webpURL = URL.createObjectURL(blob);
+        //         // 解决Promise并返回生成的WebP图像的URL
+        //         resolve({ webpURL, compressedImageData });
+        //       }, "image/webp");
+        //     };
+        //   });
+        //   const { webpURL, compressedImageData } = await loadImagePromise;
+        //   const result = await fetch(webpURL);
+        //   // console.log(result.blob());
 
-          const formData = new FormData();
-          formData.append("image", await result.blob(), "image.webp");
+        //   const formData = new FormData();
+        //   formData.append("image", await result.blob(), "image.webp");
 
-          return await new Promise((res, rej) => {
-            fetch(useRuntimeConfig().public.apiUpload, {
-              method: "POST",
-              body: formData,
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log("上传成功:", data);
-                res(
-                  useRuntimeConfig().public.static + "/" + data.file.filename
-                );
-              })
-              .catch((error) => {
-                console.error("上传失败:", error);
-                res(compressedImageData);
-              });
-          });
-        },
+        //   return await new Promise((res, rej) => {
+        //     fetch(useRuntimeConfig().public.apiUpload, {
+        //       method: "POST",
+        //       body: formData,
+        //     })
+        //       .then((response) => response.json())
+        //       .then((data) => {
+        //         console.log("上传成功:", data);
+        //         res(
+        //           useRuntimeConfig().public.static + "/" + data.file.filename
+        //         );
+        //       })
+        //       .catch((error) => {
+        //         console.error("上传失败:", error);
+        //         res(compressedImageData);
+        //       });
+        //   });
+        // },
       },
       uploadImage: {
         fieldName: "like-yuque-fileName",
