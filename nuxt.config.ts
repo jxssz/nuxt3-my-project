@@ -37,6 +37,8 @@ export default defineNuxtConfig({
     // // 公共环境变量（在客户端和服务器端都可用）
     public: {
       apiBase: process.env.BASE_URL,
+      apiUpload: process.env.UPLOAD,
+      static: process.env.STATIC,
       // baseUrl: process.env.BASE_URL,
     },
   },

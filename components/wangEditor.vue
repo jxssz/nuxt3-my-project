@@ -116,12 +116,116 @@ nextTick(() => {
     placeholder: "请输入内容",
     scroll: false,
     MENU_CONF: {
+      insertImage: {
+        async parseImageSrc(src) {
+          // console.log("转换图片链接", src);
+          // 创建一个Promise
+          const loadImagePromise = new Promise((resolve, reject) => {
+            // 创建一个新的Image对象
+            var img = new Image();
+            // 设置Image对象的src属性，加载Base64编码的图片
+            img.src = src;
+            // 当图片加载完成后执行以下操作
+            img.onload = function () {
+              // 获取图片的宽度和高度
+              var width = this.width;
+              var height = this.height;
+              // 输出图片的宽度和高度
+              // console.log("Width:", width);
+              // console.log("Height:", height); // 创建一个Canvas元素
+              var canvas = document.createElement("canvas");
+              var ctx = canvas.getContext("2d");
+              // 将图片绘制到Canvas上
+              canvas.width = width;
+              canvas.height = height;
+              ctx.drawImage(img, 0, 0);
+              // 压缩图片（这里可以调整压缩质量和尺寸）
+              var compressedImageData = canvas.toDataURL("image/jpeg", 0.5); // 压缩质量为0.5
+              // 将Data URI转换为Blob对象
+              function dataURItoBlob(dataURI) {
+                var byteString = atob(dataURI.split(",")[1]);
+                var mimeString = dataURI
+                  .split(",")[0]
+                  .split(":")[1]
+                  .split(";")[0];
+                var ab = new ArrayBuffer(byteString.length);
+                var ia = new Uint8Array(ab);
+                for (var i = 0; i < byteString.length; i++) {
+                  ia[i] = byteString.charCodeAt(i);
+                }
+                return new Blob([ab], { type: mimeString });
+              }
+              // 创建一个新的Blob对象，表示压缩后的图片数据
+              var compressedImageBlob = dataURItoBlob(compressedImageData);
+              var srcBlob = dataURItoBlob(src);
+              // 计算压缩前后图片的内存大小
+              var originalFileSize = srcBlob.size;
+              var compressedFileSize = compressedImageBlob.size;
+              // console.log("原始图片大小:", originalFileSize / 1024, "kb");
+              // console.log("压缩后图片大小:", compressedFileSize / 1024, "kb");
+              // console.log("-----------------------------------------");
+              // 将Canvas中的图像转换为WebP格式
+              canvas.toBlob(function (blob) {
+                // 创建一个URL对象，表示生成的WebP图像
+                var webpURL = URL.createObjectURL(blob);
+
+                // 解决Promise并返回生成的WebP图像的URL
+                resolve({ webpURL, compressedImageData });
+              }, "image/webp");
+              // 解决Promise并返回修改后的file对象
+              // resolve(compressedImageData);
+            };
+          });
+          const { webpURL, compressedImageData } = await loadImagePromise;
+          const result = await fetch(webpURL);
+          // console.log(result.blob());
+
+          const formData = new FormData();
+          formData.append("image", await result.blob(), "image.webp");
+
+          return await new Promise((res, rej) => {
+            fetch(useRuntimeConfig().public.apiUpload+'1', {
+              method: "POST",
+              body: formData,
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                console.log("上传成功:", data);
+                res(
+                  useRuntimeConfig().public.static + "/" + data.file.filename
+                );
+              })
+              .catch((error) => {
+                console.error("上传失败:", error);
+                res(compressedImageData);
+              });
+          });
+
+          // const uploadedJson = uploaded.json();
+          // console.log(uploadedJson);
+          // if (uploadedJson.file) {
+          //   // 等待Promise执行完成并返回结果
+          //   return (
+          //     useRuntimeConfig().public.static + uploadedJson.file.filename
+          //   );
+          // }
+        },
+        async onInsertedImage(file) {
+          // console.log("插入之前", file);
+        },
+      },
       uploadImage: {
         fieldName: "like-yuque-fileName",
         base64LimitSize: 10 * 1024 * 1024, // 10M 以下插入 base64
+        onBeforeUpload(file) {
+          console.log("更新图片之前", file);
+        },
+        customInsert(file) {
+          console.log("插入图片customInsert", file);
+        },
       },
     },
-    uploadImgShowBase64: true
+    uploadImgShowBase64: true,
   };
   // editorConfig.placeholder = "请输入内容";
   // editorConfig.scroll = false; // 禁止编辑器滚动
@@ -129,9 +233,10 @@ nextTick(() => {
   //   fieldName: "like-yuque-fileName",
   //   base64LimitSize: 10 * 1024 * 1024, // 10M 以下插入 base64
   // };
-  editorConfig.onChange = (editor) => {
-    // console.log('content', editor.children)
-  };
+  // editorConfig.onChange = (editor) => {
+  //   console.log('content', editor.children)
+  //   // data.value.content = 
+  // };
 
   // 先创建 editor
   const editor = E.value.createEditor({
@@ -161,10 +266,68 @@ nextTick(() => {
     // valueHtml.value = "<p>模拟 Ajax 异步设置内容</p>";
   }, 1500);
   editor.on("change", (e) => {
-    console.log(editor.getHtml());
+    // console.log(editor.getHtml());
     data.value.content = editor.getHtml() || "";
+    // 定义正则表达式来匹配base64图片的完整字符串
+    // const regex = /data:image\/\w+;base64,([^"]+)/g;
+    // // 用正则表达式匹配所有base64图片的完整字符串，并打印出来
+    // let match;
+    // const promises = [];
+    // while ((match = regex.exec(data.value.content)) !== null) {
+    //   // 使用闭包来捕获每次迭代的match[0]值
+    //   (function (match) {
+    //     // 压缩base64图片并保存promise
+    //     promises.push(
+    //       compressBase64Image(match[0], 0.5) // quality设置为0.5，表示压缩质量为50%
+    //         .then((compressedBase64) => {
+    //           // 将压缩后的base64字符串替换原有位置
+    //           data.value.content = data.value.content.replace(
+    //             match[0],
+    //             compressedBase64
+    //           );
+    //           // 打印压缩前后的结果
+    //           console.log("原始base64图片：", match[0]);
+    //           console.log("压缩后的base64图片：", compressedBase64);
+    //           console.log(
+    //             "--------------------------------------",
+    //             data.value.content
+    //           );
+    //         })
+    //     );
+    //   })(match);
+    // }
+    // // 等待所有压缩操作完成
+    // Promise.all(promises)
+    //   .then(() => {
+    //     console.log("所有图片压缩完成");
+    //   })
+    //   .catch((error) => {
+    //     console.error("压缩base64图片时出错：", error);
+    //   });
   });
 });
+// 压缩base64图片的函数
+function compressBase64Image(base64String, quality) {
+  const canvas = document.createElement("canvas");
+  const img = new Image();
+
+  return new Promise((resolve, reject) => {
+    img.onload = function () {
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+
+      // 将画布上的图像转换为base64格式
+      const compressedBase64 = canvas.toDataURL("image/jpeg", quality);
+      resolve(compressedBase64);
+    };
+
+    img.onerror = reject;
+    img.src = base64String;
+  });
+}
 // 模拟 ajax 异步获取内容
 onMounted(() => {});
 

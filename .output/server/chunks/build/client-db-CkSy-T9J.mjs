@@ -1,5 +1,5 @@
 import { a as useRuntimeConfig, f as withBase, e as useNuxtApp, j as joinURL } from './server.mjs';
-import { w as prefixStorage, x as createStorage } from '../runtime.mjs';
+import { v as prefixStorage, w as createStorage } from '../runtime.mjs';
 import { c as createQuery, o as omit, g as get, b as assertArray, d as ensureArray, f as sortList, h as apply, i as withoutKeys, k as withKeys } from './query-C2PmaL9Z.mjs';
 import { p as pascalCase } from './index-DIdrwBqX.mjs';
 import { u as useContentPreview } from './preview-BYirarPZ.mjs';

@@ -10,7 +10,7 @@ import { isIP } from 'node:net';
 import { statSync, promises, createReadStream } from 'node:fs';
 import { basename } from 'node:path';
 import { b as baseURL } from '../routes/renderer.mjs';
-import { i as createError$1, m as createHooks, n as sanitizeStatusCode, t as toRouteMatcher, o as createRouter$1 } from '../runtime.mjs';
+import { h as createError$1, l as createHooks, m as sanitizeStatusCode, t as toRouteMatcher, n as createRouter$1 } from '../runtime.mjs';
 import { getActiveHead } from 'unhead';
 import { RouterView, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import Prism from 'prismjs';
@@ -5103,7 +5103,7 @@ const _routes = [
     meta: {},
     alias: [],
     redirect: void 0 ,
-    component: () => import('./about-C3ZKHUm6.mjs').then((m2) => m2.default || m2)
+    component: () => import('./about-DVp9-RMq.mjs').then((m2) => m2.default || m2)
   },
   {
     name: "admin",
