@@ -1,5 +1,5 @@
 import { ref } from 'vue';
-import { o as getRequestHeader, p as setCookie, q as getCookie, r as deleteCookie } from '../runtime.mjs';
+import { p as getRequestHeader, q as setCookie, r as getCookie, v as deleteCookie } from '../runtime.mjs';
 import { u as useRoute, e as useNuxtApp, l as destr } from './server.mjs';
 
 function klona(x) {
