@@ -184,7 +184,7 @@ nextTick(() => {
           formData.append("image", await result.blob(), "image.webp");
 
           return await new Promise((res, rej) => {
-            fetch(useRuntimeConfig().public.apiUpload+'1', {
+            fetch(useRuntimeConfig().public.apiUpload, {
               method: "POST",
               body: formData,
             })
